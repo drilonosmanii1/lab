@@ -20,20 +20,32 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
       
-      - name: Run Docker Compose
-        # working-directory: .
+      - name: Run Docker Compose  
         run: docker-compose up -d
 
-  run-backup-script:
-    runs-on: ubuntu-latest
-    needs: run-docker-compose
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-     
-      - name: Make backup script executable
+      - name: Check docker containers
+        run: docker-compose ps
+
+      - name: make script executable
         run: chmod +x ./backup_mysql.sh
-             
       - name: Run backup script
         run: ./backup_mysql.sh
-        #run: bash ./backup.sh
+        
+
+
+
+      
+
+  # run-backup-script:
+  #   runs-on: ubuntu-latest
+  #   needs: run-docker-compose
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+     
+  #     - name: Make backup script executable
+  #       run: chmod +x ./backup_mysql.sh
+             
+  #     - name: Run backup script
+  #       run: ./backup_mysql.sh
+  #       #run: bash ./backup.sh
