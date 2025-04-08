@@ -26,8 +26,22 @@ jobs:
       - name: Check docker containers
         run: docker-compose ps
 
+      - name: Wait for MySQL to be Ready
+        run: |
+          for i in {1..10}; do
+            if docker exec mysql mysqladmin ping -u root -prootpassword --silent; then
+              echo "MySQL is ready."
+              break
+            fi
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
+          
+
+
       - name: make script executable
         run: chmod +x ./backup_mysql.sh
+
       - name: Run backup script
         run: ./backup_mysql.sh
         
