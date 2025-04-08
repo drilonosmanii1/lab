@@ -2,7 +2,7 @@
 
 services:
   app:
-    build: /app
+    build: ./app
     container_name: node-js.app
     ports:
       - "8080:8080"
